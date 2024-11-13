@@ -1,0 +1,49 @@
+<!-- app/views/events/edit.html.erb -->
+<div class="container mt-5">
+  <h1>Edit Event</h1>
+
+  <!-- Form for editing an event -->
+  <%= form_with(model: @event, local: true) do |form| %>
+    <div class="mb-3">
+      <%= form.label :event_name, "Event Name" %>
+      <%= form.text_field :event_name, class: "form-control" %>
+    </div>
+
+
+      <div class="mb-3">
+        <%= form.label :event_date, "Event Date" %>
+        <%= form.text_field :event_date, class: "form-control date-picker", placeholder: "Select a date", value: @event.event_date&.strftime('%Y-%m-%d %H:%M %Z') || "2024-12-12 20:48 UTC" %>
+      </div>
+      
+      <!--
+      <%= form.label :event_date, "Event Date" %>
+      <%= form.datetime_select :event_date, class: "form-control" %>
+      -->
+
+      <!-- Checkbox to clear event_date -->
+      <!-- <div class="form-check mt-2">
+        <%= form.check_box :clear_event_date, { class: "form-check-input" }, true, false %>
+        <%= form.label :clear_event_date, "No Date", class: "form-check-label" %>
+      </div> -->
+
+    <div class="mb-3">
+      <%= form.label :description, "Description" %>
+      <%= form.text_area :description, class: "form-control" %>
+    </div>
+
+    <div class="mb-3">
+      <%= form.label :status, "Status" %>
+      <%= form.select :status, Event.statuses.keys.map { |key| [key.titleize, key] }, {}, class: "form-control" %>
+    </div>
+
+    <div class="mb-3">
+      <%= form.label :capacity, "Capacity" %>
+      <%= form.number_field :capacity, class: "form-control" %>
+    </div>
+
+    <div class="mt-4">
+      <%= button_to "Update",  method: :update, class: "btn btn-primary" %>
+      <<%= button_to "Delete", @event, method: :delete, class: 'btn btn-sm btn-danger' %>
+    </div>
+  <% end %>
+</div>

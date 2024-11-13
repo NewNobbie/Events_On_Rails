@@ -1,0 +1,69 @@
+h1 {
+    font-family: 'Arial', sans-serif; /* Change to a more specific font if you prefer */
+    font-size: 2.5em; /* Adjusts the size */
+    color: #333; /* Dark gray color */
+    text-align: center; /* Centers the heading */
+    padding: 20px 0; /* Adds spacing above and below */
+    margin-bottom: 20px; /* Spacing below the heading */
+    letter-spacing: 1px; /* Spacing between letters */
+  }
+
+
+.event-container {
+    display: flex;
+    flex-direction: column; /* Stack items vertically */
+    align-items: center; /* Center align items */
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 2px;
+  }
+  
+  .table th, .table td {
+    padding: 8px;
+    border: 1px solid #ddd;
+    text-align: left;
+  }
+  
+  .badge-warning {
+    background-color: #ffc107;
+    color: #fff;
+    padding: 5px;
+    border-radius: 3px;
+  }
+  
+  .badge-success {
+    background-color: #28a745;
+    color: #fff;
+    padding: 5px;
+    border-radius: 3px;
+  }
+  
+  .badge-danger {
+    background-color: #dc3545;
+    color: #fff;
+    padding: 5px;
+    border-radius: 3px;
+  }
+  
+  .btn {
+    padding: 5px 10px;
+    text-decoration: none;
+    border-radius: 3px;
+    color: #fff;
+  }
+  
+  .btn-primary {
+    background-color: #007bff;
+  }
+  
+  .btn-warning {
+    background-color: #ffc107;
+  }
+  
+  .btn-danger {
+    background-color: #dc3545;
+  }
+  

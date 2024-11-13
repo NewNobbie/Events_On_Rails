@@ -1,0 +1,10 @@
+<h1><%= @event.event_name %></h1>
+
+<p><strong>Date:</strong> <%= @event.event_date %></p>
+<p><strong>Description:</strong> <%= @event.description %></p>
+<p><strong>Status:</strong> <%= @event.status %></p>
+<p><strong>Capacity:</strong> <%= @event.capacity %></p>
+
+<%= link_to 'Edit', edit_event_path(@event), class: 'btn btn-warning' %>
+<%= link_to 'Back to Events', events_path, class: 'btn btn-secondary' %>
+

@@ -1,35 +1,35 @@
 class ClientsController < ApplicationController
-  before_action :set_event, only: [:show, :update, :destroy]
+  skip_before_action :verify_authenticity_token, only: [:create, :update, :destroy]
+  before_action :set_client, only: [:show, :update, :destroy]
 
   def index
-    @clients = @client.All
+    @clients = Client.all
     render json: @clients
   end
 
   def create
-    @client = @client.new(client_params)
-    if @ticket.save
-      render json: @ticket, status: :created
+    @client = Client.new(client_params)
+    if @client.save
+      render json: @client, status: :created
     else
-      render json: @ticket.errors, status: :unprocessable_entity
+      render json: @client.errors, status: :unprocessable_entity
     end
   end
 
   def show
-    @ticket = Ticket.find(params[:id])
-    render json: @ticket
+    render json: @client
   end
 
   def update
-    if @client = Client.update(client_params)
-      render json: @client, status: :updated
+    if @client.update(client_params)
+      render json: @client, status: :ok
     else
       render json: @client, status: :unprocessable_entity
     end  
   end 
 
   def destroy
-    @ticket.destroy
+    @client.destroy
     head :no_content
   end  
 
@@ -37,7 +37,7 @@ class ClientsController < ApplicationController
   private
 
   def set_client
-    @client = Client.find(params[client:id])
+    @client = Client.find(params[:id])
   end
 
   def client_params

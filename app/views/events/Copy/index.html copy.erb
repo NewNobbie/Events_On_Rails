@@ -1,0 +1,38 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="event-container">
+  <h1>Events</h1>
+  <table class="table">
+    <thead>
+    <tr>
+      <th class>Event Name</th>
+      <th>Event Date</th>
+      <th>Description</th>
+      <th>Status</th>
+      <th>Capacity</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @events.each do |event| %>
+      <tr>
+        <td><%= event.event_name %></td>
+        <td><%= event.event_date %></td>
+        <td><%= event.description %></td>
+        <td><%= event.status %></td>
+        <td><%= event.capacity %></td>
+      </tr>
+    <% end %>
+  </tbody>
+  </table>
+</div>

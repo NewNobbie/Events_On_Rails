@@ -9,9 +9,9 @@ class TicketsController < ApplicationController
   def create
     @ticket = @event.tickets.new(ticket_params)
     if @ticket.save
-      render json: @ticket, status: :created
+      render json: { ticket: @ticket, available_seats: available_seats }, status: :created
     else
-      render json: @ticket.errors, status: :unprocessable_entity
+      render json: { errors: @ticket.errors, available_seats: available_seats }, status: :unprocessable_entity
     end
   end
 
@@ -21,6 +21,7 @@ class TicketsController < ApplicationController
   end
 
   def destroy
+    @ticket = Ticket.find(params[:id])
     @ticket.destroy
     head :no_content
   end  
@@ -30,8 +31,18 @@ class TicketsController < ApplicationController
 
   def set_event
     @event = Event.find(params[event:id])
+    rescue Active::RecordNotFound
+      render json: { error: "Event not found" }, status: :not_found
   end
 
+  def ticket_params
+    params.require(:ticket).permit(:client_id, :event_id, :seat)
+  end  
+
+  # Show available seats
+  def available_seats
+    @event.capacity - @event.tickets.count
+  end  
   
 end  
 
