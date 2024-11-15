@@ -1,18 +1,39 @@
 <div class="event-container">
   <h1>Events</h1>
 
-  <!-- Button to Trigger Modal -->
-  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newEventModal">
-    New Event
-  </button>
+  <% if client_signed_in? %>
+    <%= button_to 'Sign Out', destroy_client_session_path, method: :delete, class: 'btn btn-danger', id: 'sign-out-btn' %>
+  <% else %>
+    <%= link_to 'Sign In', new_client_session_path, class: 'btn btn-primary', id: 'sign-in-btn' %>
+  <% end %>
 
+  
+
+
+  <!-- Button to Trigger Modal -->
+  <% if current_client&.admin? %>
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newEventModal">
+      New Event
+    </button>
+  <% end %>
   <table class="table table-striped table-hover">
     <thead>
       <tr>
         <th>Event Name</th>
         <th>Event Date</th>
         <th>Description</th>
-        <th>Status</th>
+        <th>
+          <div style="display: flex; flex-direction: column; align-items: center;">
+          <span>Status</span>
+          <%= form_with(url: events_path, method: :get, local: true) do %>
+            <%= select_tag :status, 
+                options_for_select(Event.statuses.keys.map { |key| [key.titleize, key] }, params[:status]), 
+                include_blank: "All", 
+                class: "mt-1 p-1 border border-gray-300 rounded-md", 
+                onchange: "this.form.submit();" %>
+          <% end %>
+        </div>
+        </th>
         <th>Capacity</th>
         <th>Actions</th>
       </tr>
@@ -23,12 +44,14 @@
           <td><%= event.event_name %></td>
           <td><%= event.event_date %></td>
           <td><%= event.description %></td>
-          <td><%= event.status %></td>
+          <td><%= event.status.titleize %></td>
           <td><%= event.capacity %></td>
           <td>
             <%= link_to 'Show', event_path(event), class: 'btn btn-sm btn-info' %>
-            <%= link_to 'Edit', edit_event_path(event), class: 'btn btn-sm btn-warning' %>
-            <%= button_to 'Delete', event_path(event), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-sm btn-danger' %>
+            <% if current_client&.admin? %>
+              <%= link_to 'Edit', edit_event_path(event), class: 'btn btn-sm btn-warning' %>
+              <%= button_to 'Delete', event_path(event), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-sm btn-danger' %>
+            <% end %>
           </td>
         </tr>
       <% end %>
@@ -66,7 +89,7 @@
           <div class="mb-3">
             <%= form.label :capacity, "Capacity" %>
             <%= form.number_field :capacity, class: "form-control" %>
-          </div>
+          </div> 
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
             <%= form.submit "Create Event", class: "btn btn-primary" %>

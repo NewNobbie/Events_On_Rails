@@ -24,6 +24,10 @@
       <%= yield %>
     </main>
 
+    <p class="notice"><%= notice %></p>
+    <p class="alert"><%= alert %></p>
+
+
     <!-- Ensure Importmap JavaScript loads before Bootstrap JS -->
     <%= javascript_importmap_tags %>
 

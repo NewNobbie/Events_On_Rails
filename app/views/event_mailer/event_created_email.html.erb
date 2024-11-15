@@ -1,0 +1,17 @@
+
+
+<p>Your event "<%= @event.event_name %>" has been successfully created!</p>
+
+<p>Details:</p>
+<ul>
+  <% if @event.event_date.present? %>
+    <li><strong>Date:</strong> <%= @event.event_date %></li>
+  <% else %>
+    <li><strong>Status:</strong> <%= @event.status.capitalize %></li>
+  <% end %>
+  <li><strong>Capacity:</strong> <%= @event.capacity %></li>
+  <li><strong>Description:</strong> <%= @event.description %></li>
+</ul>
+
+<p>Thank you for using our platform!</p>
+

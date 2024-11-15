@@ -15,7 +15,5 @@ class Ticket < ApplicationRecord
     if event.tickets.count >= event.capacity
       errors.add(:base, "Event has reached its capacity")
     end  
-  end  
-
-
+  end
 end

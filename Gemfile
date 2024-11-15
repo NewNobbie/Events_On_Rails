@@ -24,9 +24,13 @@ gem 'bootstrap', '~> 5.2'
 # Sass
 gem 'sassc-rails'
 
-# JS other way
-gem 'mini_racer', platforms: :ruby
+# Authentication
+gem 'devise', '~> 4.9'
 
+gem 'dotenv-rails', groups: [:development, :test]
+
+# JS other way
+# gem 'mini_racer', platforms: :ruby
 
 # Use Redis adapter to run Action Cable in production
 # gem "redis", ">= 4.0.1"

@@ -1,19 +1,28 @@
 class EventsController < ApplicationController
   skip_before_action :verify_authenticity_token, only: [:create, :update, :destroy]
   before_action :set_event, only: [:show, :edit, :update, :destroy]
+  # before_action :require_admin, only: [:create]
 
   def index
-    @events = Event.all
-    respond_to do |format|
+    @events = if params[:status].present?
+      Event.by_status(params[:status])
+    else
+      Event.all
+    end
+
+      respond_to do |format|
       format.html
       format.json { render json: @events }
-    end  
+    end   
   end
 
   def create
     @event = Event.new(event_params)
+    @event.admin = current_client
+
     if @event.save
       redirect_to @event, notice: 'Event was successfully created.'
+      EventMailer.event_created_email(current_client, @event).deliver_now
       # render json: @event, status: :created
     else
       render json: @event.errors, status: :unprocessable_entity
@@ -74,6 +83,12 @@ class EventsController < ApplicationController
 
   def event_params_update
     params.require(:event).permit(:event_name, :event_date, :description, :status , :capacity, :clear_event_date)
+  end
+  
+  def require_admin
+    unless current_client&.admin
+      redirect_to events_path, alert: 'Only Admin can to perform this action'
+    end  
   end  
 
 end  
